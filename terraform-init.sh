@@ -43,6 +43,13 @@ SELECTED_SA=$(yc --profile=$PROFILE iam service-account list --jq '.[].name' | g
 
 gum spin --spinner dot --title "Creating authorized keys..." -- yc --profile $PROFILE iam key create --service-account-name $SELECTED_SA --folder-id $FOLDER_ID --output $SELECTED_SA.json
 
+if [ "$ZONE" == "kz1-a" ]; then
+    ENDPOINT="api.yandexcloud.kz:443"
+else
+    ENDPOINT="api.cloud.yandex.net:443"
+fi
+
+
 PROVIDER_MANIFEST=$(cat << EOF
 terraform {
   required_providers {
@@ -55,6 +62,7 @@ terraform {
 // Configure the Yandex.Cloud provider
 provider "yandex" {
   service_account_key_file = "${SELECTED_SA}.json"
+  endpoint = "${ENDPOINT}"
   cloud_id                 = "${CLOUD_ID}"
   folder_id                = "${FOLDER_ID}"
   zone                     = "${ZONE}"
