@@ -117,7 +117,7 @@ output "internal_ip_address_vm_${SELECTED_FAMILY}" {
   value = yandex_compute_instance.vm-${SELECTED_FAMILY}.network_interface.0.ip_address
 }
 
-output "ssh ubuntu@external_ip_address_vm_${SELECTED_FAMILY}" {
+output "external_ip_address_vm_${SELECTED_FAMILY}" {
   value = yandex_compute_instance.vm-${SELECTED_FAMILY}.network_interface.0.nat_ip_address
 }
 EOF
